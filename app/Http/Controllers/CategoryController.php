@@ -12,7 +12,10 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        return view('category.index', [
+            'title' => 'Kategori Buku',
+            'categories' => Category::withCount('books')->latest()->get(),
+        ]);
     }
 
     /**
@@ -20,7 +23,9 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('category.create', [
+            'title' => 'Tambah Kategori',
+        ]);
     }
 
     /**
@@ -28,7 +33,19 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = $request->validate([
+            'name' => 'required|unique:categories,name|max:100',
+        ]);
+
+        \Illuminate\Support\Facades\DB::beginTransaction();
+        try {
+            Category::create($validate);
+            \Illuminate\Support\Facades\DB::commit();
+            return to_route('category.index')->withSuccess('Kategori berhasil ditambahkan');
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\DB::rollBack();
+            return to_route('category.create')->withError('Gagal menambahkan kategori: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -36,7 +53,10 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
+        return view('category.show', [
+            'title' => 'Detail Kategori',
+            'category' => $category->load('books'),
+        ]);
     }
 
     /**
@@ -44,7 +64,10 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        return view('category.edit', [
+            'title' => 'Edit Kategori',
+            'category' => $category,
+        ]);
     }
 
     /**
@@ -52,7 +75,19 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $validate = $request->validate([
+            'name' => 'required|unique:categories,name,' . $category->id . '|max:100',
+        ]);
+
+        \Illuminate\Support\Facades\DB::beginTransaction();
+        try {
+            $category->update($validate);
+            \Illuminate\Support\Facades\DB::commit();
+            return to_route('category.index')->withSuccess('Kategori berhasil diubah');
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\DB::rollBack();
+            return to_route('category.edit', $category)->withError('Gagal mengubah kategori: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -60,6 +95,14 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        \Illuminate\Support\Facades\DB::beginTransaction();
+        try {
+            $category->delete();
+            \Illuminate\Support\Facades\DB::commit();
+            return to_route('category.index')->withSuccess('Kategori berhasil dihapus');
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\DB::rollBack();
+            return to_route('category.index')->withError('Gagal menghapus kategori: ' . $e->getMessage());
+        }
     }
 }

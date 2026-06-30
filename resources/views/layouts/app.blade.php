@@ -288,6 +288,22 @@
                 </a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('book.*') ? '' : 'collapsed' }}"
+                    href="{{ route('book.index') }}">
+                    <i class='bx bx-book-open'></i>
+                    <span>Katalog Buku</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('category.*') ? '' : 'collapsed' }}"
+                    href="{{ route('category.index') }}">
+                    <i class='bx bx-category'></i>
+                    <span>Kategori Buku</span>
+                </a>
+            </li>
+
             @if (Auth::user()->role == 'Superadmin')
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('user.*') ? '' : 'collapsed' }}"
