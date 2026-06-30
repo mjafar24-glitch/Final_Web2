@@ -21,6 +21,8 @@ class DatabaseSeeder extends Seeder
             MemberSeeder::class,
             CategorySeeder::class,
             BookSeeder::class,
+            LocationSeeder::class,
+            BookCopySeeder::class,
         ]);
     }
 }

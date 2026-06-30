@@ -8,6 +8,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\LocationController;
+use App\Http\Controllers\BookCopyController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -31,6 +33,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('/member', MemberController::class);
     Route::resource('/category', CategoryController::class);
     Route::resource('/book', BookController::class);
+    Route::resource('/location', LocationController::class);
+    Route::resource('/book_copy', BookCopyController::class);
 
     Route::get('/setting', [SettingController::class, 'index'])->name('setting.index');
     Route::put('/setting/{setting}/update', [SettingController::class, 'update'])->name('setting.update');

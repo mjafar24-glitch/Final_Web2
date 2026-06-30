@@ -304,6 +304,14 @@
                 </a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('location.*') ? '' : 'collapsed' }}"
+                    href="{{ route('location.index') }}">
+                    <i class='bx bx-map-pin'></i>
+                    <span>Lokasi Rak</span>
+                </a>
+            </li>
+
             @if (Auth::user()->role == 'Superadmin')
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('user.*') ? '' : 'collapsed' }}"

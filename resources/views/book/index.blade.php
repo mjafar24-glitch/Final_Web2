@@ -58,7 +58,7 @@
                         <th scope="col">Kategori</th>
                         <th scope="col">Penerbit</th>
                         <th scope="col">Tahun</th>
-                        <th scope="col" style="width: 110px;">Action</th>
+                        <th scope="col" style="width: 140px;">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -75,6 +75,9 @@
                             <td>{{ $book->year_published ?? '-' }}</td>
                             <td>
                                 <div class="d-flex gap-1 justify-content-center flex-nowrap">
+                                    <a href="{{ route('book_copy.index', ['book_id' => $book->id]) }}" class="btn btn-success btn-sm" title="Manajemen Eksemplar">
+                                        <i class='bx bx-copy'></i>
+                                    </a>
                                     <button type="button" class="btn btn-info btn-sm btn-detail"
                                         data-route="{{ route('book.show', $book) }}">
                                         <i class='bx bx-show'></i>
