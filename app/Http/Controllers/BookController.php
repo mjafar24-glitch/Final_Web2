@@ -86,7 +86,8 @@ class BookController extends Controller
     {
         return view('book.show', [
             'title' => 'Detail Buku',
-            'book'  => $book->load('category'),
+            'book'  => $book->load(['category', 'bookCopies.location', 'bookReviews.member']),
+            'members' => \App\Models\Member::where('is_active', true)->get()
         ]);
     }
 

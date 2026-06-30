@@ -37,6 +37,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/book', BookController::class);
     Route::resource('/location', LocationController::class);
     Route::resource('/book_copy', BookCopyController::class);
+    Route::post('/book_review', [\App\Http\Controllers\BookReviewController::class, 'store'])->name('book_review.store');
 
     // Circulation & Fines
     Route::get('/circulation', [CirculationController::class, 'index'])->name('circulation.index');
