@@ -336,6 +336,26 @@
                 </a>
             </li>
 
+            <li class="nav-heading">Laporan & Statistik</li>
+
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('report.borrowing') ? '' : 'collapsed' }}"
+                    href="{{ route('report.borrowing') }}">
+                    <i class='bx bx-calendar-event'></i>
+                    <span>Laporan Peminjaman</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('report.performance') ? '' : 'collapsed' }}"
+                    href="{{ route('report.performance') }}">
+                    <i class='bx bx-bar-chart-alt-2'></i>
+                    <span>Kinerja Buku</span>
+                </a>
+            </li>
+
+            <li class="nav-heading">Lainnya</li>
+
             @if (Auth::user()->role == 'Superadmin')
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('user.*') ? '' : 'collapsed' }}"

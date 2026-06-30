@@ -52,6 +52,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/reservation', [App\Http\Controllers\ReservationController::class, 'store'])->name('reservation.store');
     Route::post('/reservation/{reservation}/cancel', [App\Http\Controllers\ReservationController::class, 'cancel'])->name('reservation.cancel');
 
+    // Reports
+    Route::get('/report/borrowing', [\App\Http\Controllers\ReportController::class, 'borrowing'])->name('report.borrowing');
+    Route::get('/report/borrowing/export-excel', [\App\Http\Controllers\ReportController::class, 'exportExcel'])->name('report.borrowing.excel');
+    Route::get('/report/borrowing/export-pdf', [\App\Http\Controllers\ReportController::class, 'exportPdf'])->name('report.borrowing.pdf');
+    Route::get('/report/performance', [\App\Http\Controllers\ReportController::class, 'performance'])->name('report.performance');
+
     Route::get('/setting', [SettingController::class, 'index'])->name('setting.index');
     Route::put('/setting/{setting}/update', [SettingController::class, 'update'])->name('setting.update');
 });

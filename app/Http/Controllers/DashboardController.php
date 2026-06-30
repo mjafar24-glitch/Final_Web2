@@ -11,15 +11,38 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $totalUsers = \App\Models\User::count();
-        $superadminCount = \App\Models\User::where('role', 'Superadmin')->count();
-        $adminCount = \App\Models\User::where('role', 'Admin')->count();
+        $totalBooks = \App\Models\Book::count();
+        $totalCopies = \App\Models\BookCopy::count();
+        $activeMembers = \App\Models\Member::where('is_active', true)->count();
+        
+        $borrowingsThisMonth = \App\Models\Borrowing::whereMonth('borrow_date', \Carbon\Carbon::now()->month)
+            ->whereYear('borrow_date', \Carbon\Carbon::now()->year)
+            ->count();
+            
+        $totalFinesPaid = \App\Models\Fine::where('payment_status', 'paid')->sum('amount');
+
+        // Chart Data (Last 6 Months Borrowings)
+        $chartData = [];
+        $chartLabels = [];
+        for ($i = 5; $i >= 0; $i--) {
+            $month = \Carbon\Carbon::now()->subMonths($i);
+            $count = \App\Models\Borrowing::whereMonth('borrow_date', $month->month)
+                ->whereYear('borrow_date', $month->year)
+                ->count();
+            
+            $chartLabels[] = $month->translatedFormat('F Y');
+            $chartData[] = $count;
+        }
 
         return view('dashboard.index', [
-            'title' => 'Dashboard',
-            'totalUsers' => $totalUsers,
-            'superadminCount' => $superadminCount,
-            'adminCount' => $adminCount,
+            'title' => 'Dashboard Utama',
+            'totalBooks' => $totalBooks,
+            'totalCopies' => $totalCopies,
+            'activeMembers' => $activeMembers,
+            'borrowingsThisMonth' => $borrowingsThisMonth,
+            'totalFinesPaid' => $totalFinesPaid,
+            'chartLabels' => $chartLabels,
+            'chartData' => $chartData,
         ]);
     }
 
