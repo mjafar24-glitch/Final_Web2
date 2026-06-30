@@ -22,7 +22,7 @@ Melakukan penyesuaian pada sistem autentikasi dan modul manajemen pengguna (User
    - Gunakan pendekatan arsitektur yang sudah ada (misal: jika template menggunakan standard resource controller, ikuti pola tersebut).
 
 ## Kriteria Selesai (Definition of Done)
-- [ ] Migration tabel users telah disesuaikan dan di-*migrate* ulang tanpa error.
-- [ ] Menjalankan seeder berhasil mengisi tabel `users` dengan variasi role (Admin, Pustakawan).
-- [ ] Fitur CRUD pengguna (Users) berjalan lancar dari antarmuka web, mampu menyimpan dan meng-update kolom role.
-- [ ] Tidak ada pelanggaran *coding style* yang ada saat ini.
+- [x] Migration tabel users telah disesuaikan dan di-*migrate* ulang tanpa error.
+- [x] Menjalankan seeder berhasil mengisi tabel `users` dengan variasi role (Admin, Pustakawan).
+- [x] Fitur CRUD pengguna (Users) berjalan lancar dari antarmuka web, mampu menyimpan dan meng-update kolom role.
+- [x] Tidak ada pelanggaran *coding style* yang ada saat ini.
