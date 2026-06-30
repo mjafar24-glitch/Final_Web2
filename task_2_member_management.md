@@ -18,6 +18,6 @@ Membangun fitur untuk mengelola data keanggotaan perpustakaan. Modul ini ditujuk
    - Pembuatan view (blade) untuk index, create, edit, show.
 
 ## Kriteria Selesai (Definition of Done)
-- [ ] Migration tabel members dan *Seeder* berhasil dijalankan.
-- [ ] Visualisasi data pada antarmuka admin menampilkan data *dummy*.
-- [ ] Fitur CRUD anggota berfungsi sepenuhnya.
+- [x] Migration tabel members dan *Seeder* berhasil dijalankan.
+- [x] Visualisasi data pada antarmuka admin menampilkan data *dummy*.
+- [x] Fitur CRUD anggota berfungsi sepenuhnya.

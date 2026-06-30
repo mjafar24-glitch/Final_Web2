@@ -280,6 +280,14 @@
                 </a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('member.*') ? '' : 'collapsed' }}"
+                    href="{{ route('member.index') }}">
+                    <i class='bx bx-group'></i>
+                    <span>Members</span>
+                </a>
+            </li>
+
             @if (Auth::user()->role == 'Superadmin')
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('user.*') ? '' : 'collapsed' }}"
