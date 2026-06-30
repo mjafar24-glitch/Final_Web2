@@ -10,6 +10,8 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\BookCopyController;
+use App\Http\Controllers\CirculationController;
+use App\Http\Controllers\FineController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -35,6 +37,14 @@ Route::middleware('auth')->group(function () {
     Route::resource('/book', BookController::class);
     Route::resource('/location', LocationController::class);
     Route::resource('/book_copy', BookCopyController::class);
+
+    // Circulation & Fines
+    Route::get('/circulation', [CirculationController::class, 'index'])->name('circulation.index');
+    Route::post('/circulation/borrow', [CirculationController::class, 'borrow'])->name('circulation.borrow');
+    Route::post('/circulation/return', [CirculationController::class, 'returnBook'])->name('circulation.return');
+    
+    Route::get('/fine', [FineController::class, 'index'])->name('fine.index');
+    Route::post('/fine/{fine}/pay', [FineController::class, 'pay'])->name('fine.pay');
 
     Route::get('/setting', [SettingController::class, 'index'])->name('setting.index');
     Route::put('/setting/{setting}/update', [SettingController::class, 'update'])->name('setting.update');

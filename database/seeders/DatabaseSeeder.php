@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             BookSeeder::class,
             LocationSeeder::class,
             BookCopySeeder::class,
+            BorrowingSeeder::class,
         ]);
     }
 }

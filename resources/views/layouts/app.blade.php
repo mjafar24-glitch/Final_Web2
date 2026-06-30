@@ -312,6 +312,22 @@
                 </a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('circulation.*') ? '' : 'collapsed' }}"
+                    href="{{ route('circulation.index') }}">
+                    <i class='bx bx-transfer'></i>
+                    <span>Sirkulasi Buku</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('fine.*') ? '' : 'collapsed' }}"
+                    href="{{ route('fine.index') }}">
+                    <i class='bx bx-wallet'></i>
+                    <span>Data Denda</span>
+                </a>
+            </li>
+
             @if (Auth::user()->role == 'Superadmin')
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('user.*') ? '' : 'collapsed' }}"
