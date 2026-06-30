@@ -39,12 +39,26 @@ class CirculationController extends Controller
 
         $copy = BookCopy::where('copy_code', $request->copy_code)->first();
 
-        if ($copy->status !== 'available') {
+        if ($copy->status === 'reserved') {
+            // Cek apakah member ini yang mereservasi
+            $reservation = \App\Models\Reservation::where('allocated_copy_id', $copy->id)
+                ->where('member_id', $request->member_id)
+                ->where('status', 'pending')
+                ->first();
+                
+            if (!$reservation) {
+                return back()->withError("Buku dengan kode {$request->copy_code} sedang direservasi oleh anggota lain.");
+            }
+        } elseif ($copy->status !== 'available') {
             return back()->withError("Buku dengan kode {$request->copy_code} sedang tidak tersedia (Status: {$copy->status}).");
         }
 
         DB::beginTransaction();
         try {
+            if (isset($reservation)) {
+                $reservation->update(['status' => 'fulfilled']);
+            }
+
             Borrowing::create([
                 'member_id' => $request->member_id,
                 'book_copy_id' => $copy->id,
@@ -109,7 +123,33 @@ class CirculationController extends Controller
                 'status' => 'returned',
             ]);
 
-            $copy->update(['status' => 'available']);
+            // Cek apakah ada reservasi pending untuk buku ini
+            $pendingReservation = \App\Models\Reservation::where('book_id', $copy->book_id)
+                ->where('status', 'pending')
+                ->whereNull('allocated_copy_id')
+                ->orderBy('request_date', 'asc')
+                ->first();
+
+            if ($pendingReservation) {
+                // Alokasikan ke reservasi pertama di antrean
+                $pendingReservation->update([
+                    'allocated_copy_id' => $copy->id,
+                    'expiry_date' => $today->copy()->addDays(2),
+                ]);
+                $copy->update(['status' => 'reserved']);
+                
+                DB::commit();
+                
+                $msg = 'Buku berhasil dikembalikan.';
+                if ($fineAmount > 0) {
+                    $msg .= " Terlambat {$lateDays} hari. Denda: Rp " . number_format($fineAmount, 0, ',', '.') . ".";
+                }
+                $msg .= " Info: Buku ini langsung dialokasikan untuk reservasi member {$pendingReservation->member->name}.";
+
+                return back()->withSuccess($msg);
+            } else {
+                $copy->update(['status' => 'available']);
+            }
 
             DB::commit();
 

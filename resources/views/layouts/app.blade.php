@@ -328,6 +328,14 @@
                 </a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('reservation.*') ? '' : 'collapsed' }}"
+                    href="{{ route('reservation.index') }}">
+                    <i class='bx bx-bookmark'></i>
+                    <span>Reservasi Buku</span>
+                </a>
+            </li>
+
             @if (Auth::user()->role == 'Superadmin')
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('user.*') ? '' : 'collapsed' }}"

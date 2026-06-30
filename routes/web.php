@@ -46,6 +46,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/fine', [FineController::class, 'index'])->name('fine.index');
     Route::post('/fine/{fine}/pay', [FineController::class, 'pay'])->name('fine.pay');
 
+    // Reservations
+    Route::get('/reservation', [App\Http\Controllers\ReservationController::class, 'index'])->name('reservation.index');
+    Route::post('/reservation', [App\Http\Controllers\ReservationController::class, 'store'])->name('reservation.store');
+    Route::post('/reservation/{reservation}/cancel', [App\Http\Controllers\ReservationController::class, 'cancel'])->name('reservation.cancel');
+
     Route::get('/setting', [SettingController::class, 'index'])->name('setting.index');
     Route::put('/setting/{setting}/update', [SettingController::class, 'update'])->name('setting.update');
 });
